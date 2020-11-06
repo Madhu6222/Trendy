@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy", "Trendy.csproj", "{21FC216A-E5E2-48A2-A794-2D93562BB963}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy.Database", "..\Trendy.Database\Trendy.Database.csproj", "{F80FB422-5455-4F09-843B-B60F4A810215}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy.Entities", "..\Trendy.Entities\Trendy.Entities.csproj", "{5D7B6013-77A7-45E0-8FD3-9F0830E80B41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{21FC216A-E5E2-48A2-A794-2D93562BB963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21FC216A-E5E2-48A2-A794-2D93562BB963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21FC216A-E5E2-48A2-A794-2D93562BB963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80FB422-5455-4F09-843B-B60F4A810215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80FB422-5455-4F09-843B-B60F4A810215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80FB422-5455-4F09-843B-B60F4A810215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80FB422-5455-4F09-843B-B60F4A810215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D7B6013-77A7-45E0-8FD3-9F0830E80B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D7B6013-77A7-45E0-8FD3-9F0830E80B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D7B6013-77A7-45E0-8FD3-9F0830E80B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D7B6013-77A7-45E0-8FD3-9F0830E80B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
