@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy", "Trendy.csproj", "{21FC216A-E5E2-48A2-A794-2D93562BB963}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy.Web", "Trendy.Web.csproj", "{21FC216A-E5E2-48A2-A794-2D93562BB963}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trendy.Database", "..\Trendy.Database\Trendy.Database.csproj", "{F80FB422-5455-4F09-843B-B60F4A810215}"
 EndProject
