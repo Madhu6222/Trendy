@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="tblContainer">
+
+    @{
+        Html.RenderAction("ProductTable");
+        //Html.RenderAction("Create");
+     }
+</div>
+
+<div id="actionContainer">
+
+</div>
+
+
+
