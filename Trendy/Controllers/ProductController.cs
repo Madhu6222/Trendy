@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Trendy.Entities;
 using Trendy.Services;
+using Trendy.ViewModels;
 
 namespace Trendy.Controllers
 {
@@ -43,13 +44,26 @@ namespace Trendy.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            CategoryService categoryService = new CategoryService();
+
+            var categories = categoryService.GetCategories();
+
+            return PartialView(categories);
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(NewCategoryViewModel model)
         {
-            productsService.SaveProduct(product);
+            CategoryService categoryService = new CategoryService();
+
+            var newProduct = new Product();
+            newProduct.Name = model.Name;
+            newProduct.Description = model.Description;
+            newProduct.Price = model.Price;
+            newProduct.CategoryID = model.CategoryID;
+           // newProduct.Category = categoryService.GetCategory(model.CategoryID);
+
+            productsService.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 

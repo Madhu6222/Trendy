@@ -55,6 +55,14 @@
     <Compile Include="Migrations\202011061503549_InitialModel.designer.cs">
       <DependentUpon>202011061503549_InitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011110704534_ImageURLAddedToCategoriesTable.cs" />
+    <Compile Include="Migrations\202011110704534_ImageURLAddedToCategoriesTable.designer.cs">
+      <DependentUpon>202011110704534_ImageURLAddedToCategoriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011120953283_CategoryIDAddedToProductTable.cs" />
+    <Compile Include="Migrations\202011120953283_CategoryIDAddedToProductTable.designer.cs">
+      <DependentUpon>202011120953283_CategoryIDAddedToProductTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyDbContext.cs" />
@@ -72,6 +80,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202011061503549_InitialModel.resx">
       <DependentUpon>202011061503549_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011110704534_ImageURLAddedToCategoriesTable.resx">
+      <DependentUpon>202011110704534_ImageURLAddedToCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011120953283_CategoryIDAddedToProductTable.resx">
+      <DependentUpon>202011120953283_CategoryIDAddedToProductTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

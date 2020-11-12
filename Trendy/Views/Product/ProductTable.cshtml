@@ -4,17 +4,81 @@
 
 }
 
-<h2>ProductTable</h2>
 
 <div>
-    <form method="post">
-        <input name="Search" id="searchTxt" />
-        <button type="button" id="searchBtn">Search</button>
+    <form >
+        <h3>Search</h3>
+        <div class="row">
+            
+            <div class="col-md-3">
+                <div class="form-group">  
+                 <input name="Search" id="searchTxt" class="form-control"  placeholder="Search" >
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="button" id="searchBtn" class="btn aa-browse-btn" >Search</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" id="newBtn" class="btn aa-browse-btn">New</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
-    <button type="button" id="newBtn">New</button>
+
+    @*<button type="button" id="searchBtn" class="aa-browse-btn">Search</button>*@
 </div>
 
-<div id="dataContainer">
+<br />
+
+<div id="dataContainer" class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Product Name</td>
+                <td>Category</td>
+                <td>Price</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        @if (product.Category != null)
+                        {
+                            <text>@product.Category.Name</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>@product.Price</td>
+                    <td>
+                        <button class="aa-browse-btn btn editProductBtn" data-id="@product.ID">Edit</button>
+                        <button class="aa-browse-btn btn deleteProductBtn" data-id="@product.ID">Delete</button>
+                    </td>
+                </tr>
+
+             }
+
+
+            
+        </tbody>
+    </table>
+</div>
+
+@*<div id="dataContainer">
     <table>
         <thead>
             <tr>
@@ -30,11 +94,20 @@
             {
                 <tr>
                     <td>@product.Name</td>
-                    <td> - </td>
+                    <td>
+                        @if (product.Category != null)
+                        {
+                            <text>@product.Category.Name</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
                     <td>@product.Price</td>
                     <td>
-                        <button class="editProductBtn" data-id="@product.ID">Edit</button>
-                        <button class="deleteProductBtn" data-id="@product.ID">Delete</button>
+                        <button class="aa-browse-btn editProductBtn" data-id="@product.ID">Edit</button>
+                        <button class="aa-browse-btn deleteProductBtn" data-id="@product.ID">Delete</button>
                     </td>
                 </tr>
 
@@ -42,50 +115,9 @@
         </tbody>
 
     </table>
-</div>
-
-<div id="actionContainer">
-
-</div>
-
-@*<script>
-            $("#searchBtn").on("click", function () {
-                var searchValue = $("#searchTxt").val();
-
-                $.ajax({
-                    url: '/Product/ProductTable',
-                    data: {
-                        search: searchValue
-                     }
-                    })
-                        .done(function (response) {
-                            alert("SUCCESS");
-                            $('#tableContainer').html(response);
-                        })
-                            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                                alert('FAIL');
-                            });
+</div>*@
 
 
-            });
-            $("#newBtn").on("click",function () {
-
-                $.ajax({
-                    url: '/Product/Create',
-
-                })
-                    .done(function (response) {
-                        $('#actionContainer').html(response);
-                    })
-                    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('FAIL');
-                    });
-
-            });
-    </script>
-@section scripts
-{}
-*@
 
 
 <script>
@@ -93,7 +125,7 @@
 
         //  $("#tblContainer ").on("click","#searchBtn" ,function () {
           $("#searchBtn" ).on("click",function () {
-              alert("search btn clicked");
+              
 
               var searchValue = $('#searchTxt').val();
               console.log(searchValue);
@@ -114,7 +146,7 @@
                   });
           });
           $("#newBtn").on("click", function () {
-              alert("New btn clicked");
+              
                 $.ajax({
                     type: "Get",
                     url: "/Product/Create",

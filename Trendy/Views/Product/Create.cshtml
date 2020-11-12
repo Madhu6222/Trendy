@@ -1,34 +1,47 @@
-﻿
+﻿@model List<Category>
 @{
     ViewBag.Title = "Create";
-    
+
 }
 
 <h2>Create Product</h2>
 
-<form id="createProduct">
-    <label>Name</label>
-    <input name="Name" />
 
-    <br />
+<div class="col-md-6">
+    <div class="aa-myaccount-login">
+        
+        <form action="" id="createProduct" class="aa-login-form">
+            <label>Category</label>
+            <select class="form-control" name="CategoryID">
+                @foreach (var category in Model)
+                {
 
-    <label>Description</label>
-    <input name="Description" />
+                    <option value="@category.ID">@category.Name</option>
+                }
+            </select><br />
+            <label>Name</label>
+            <input class="form-control" name="Name" /><br />
 
-    <br />
+            <label>Description</label>
+            <input class="form-control" name="Description" /><br />
 
-    <label>Price</label>
-    <input name="Price" />
+            <label>Price</label>
+            <input class="form-control" name="Price" />
 
-    <br />
-    <button type="button" id="saveBtn">Add</button>
-</form>
+            <button type="button" id="saveBtn" class="aa-browse-btn btn">Add</button>
+        </form>
+    </div>
+</div>
+
+
+
+
 
 
 <script>
 
     $("#saveBtn" ).on("click",function () {
-        alert("save btn clicked");
+        
 
         $.ajax(
             {

@@ -17,7 +17,7 @@ namespace Trendy.Controllers
         public ActionResult Index()
         {
             var categories = categoryService.GetCategories();
-            return View();
+            return View(categories);
         }
 
         [HttpGet]

@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.scrollToTop {
+border-radius:50%;
+}
+
+.product-search-bar{
+    margin-top:200px;
+    
+}
+
