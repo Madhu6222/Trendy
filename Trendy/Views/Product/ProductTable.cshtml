@@ -78,45 +78,6 @@
     </table>
 </div>
 
-@*<div id="dataContainer">
-    <table>
-        <thead>
-            <tr>
-                <td>Product Name</td>
-                <td>Category</td>
-                <td>Price</td>
-                <td>Actions</td>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var product in Model)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        @if (product.Category != null)
-                        {
-                            <text>@product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-                    </td>
-                    <td>@product.Price</td>
-                    <td>
-                        <button class="aa-browse-btn editProductBtn" data-id="@product.ID">Edit</button>
-                        <button class="aa-browse-btn deleteProductBtn" data-id="@product.ID">Delete</button>
-                    </td>
-                </tr>
-
-            }
-        </tbody>
-
-    </table>
-</div>*@
-
 
 
 
@@ -165,7 +126,7 @@
 
           });
           $(".editProductBtn").on("click", function () {
-              alert("Edit btn clicked");
+              
               $.ajax({
                  
                   url: "/Product/Edit",

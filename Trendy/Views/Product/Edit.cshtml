@@ -6,32 +6,35 @@
 
 <h2>Edit Product</h2>
 
-<form id="editProduct">
 
-    <input type="hidden" name="ID" value="@Model.ID"/>
 
-    <label>Name</label>
-    <input name="Name" value="@Model.Name" />
+    <form id="editProduct"  >
 
-    <br />
+        <input type="hidden" name="ID" value="@Model.ID"/>
 
-    <label>Description</label>
-    <input name="Description" value="@Model.Description" />
+        <label>Name</label>
+        <input class="form-control" name="Name" value="@Model.Name" />
 
-    <br />
+        <br />
 
-    <label>Price</label>
-    <input name="Price" value="@Model.Price" />
+        <label>Description</label>
+        <input class="form-control" name="Description" value="@Model.Description" />
 
-    <br />
-    <button type="button" id="editBtn">Update</button>
-</form>
+        <br />
+
+        <label>Price</label>
+        <input class="form-control" name="Price" value="@Model.Price" />
+
+        <br />
+        <button type="button" class="aa-browse-btn btn" id="editBtn">Update</button>
+    </form>
+
 
 
 <script>
 
     $("#editBtn" ).on("click",function () {
-        alert("save btn clicked");
+       
 
         $.ajax(
             {

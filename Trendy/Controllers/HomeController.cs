@@ -16,7 +16,7 @@ namespace Trendy.Controllers
         {
             HomeViewModels model = new HomeViewModels();
 
-            model.Categories = categoryService.GetCategories();
+            model.FeaturedCategories = categoryService.GetFeaturedCategories();
 
             return View(model);
         }

@@ -63,6 +63,10 @@
     <Compile Include="Migrations\202011120953283_CategoryIDAddedToProductTable.designer.cs">
       <DependentUpon>202011120953283_CategoryIDAddedToProductTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011121520435_AddedisFeaturedToCategories.cs" />
+    <Compile Include="Migrations\202011121520435_AddedisFeaturedToCategories.designer.cs">
+      <DependentUpon>202011121520435_AddedisFeaturedToCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyDbContext.cs" />
@@ -86,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011120953283_CategoryIDAddedToProductTable.resx">
       <DependentUpon>202011120953283_CategoryIDAddedToProductTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011121520435_AddedisFeaturedToCategories.resx">
+      <DependentUpon>202011121520435_AddedisFeaturedToCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

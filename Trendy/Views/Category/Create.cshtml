@@ -4,30 +4,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create Category</h2>
+
+<div class="container product-search-bar">
+
+    <form method="post" class="aa-login-form">
+        <h2>Create Category</h2>
+        <label>Name</label>
+        <input class="form-control" name="Name" />
+
+        <br />
+
+        <label>Description</label>
+        <input class="form-control" name="Description" />
+
+        <br />
+
+        <label>Image</label>
+        <input type="hidden" id="ImageURL" name="ImageURL" />
+        <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+
+        <img  id="categoryImage" />
 
 
-<form method="post">
-    <label>Name</label>
-    <input name="Name" />
+        <br />
 
-    <br />
+        @*<div class="custom-control custom-switch">
+            <label class="custom-control-label" for="isFeatured">Is Featured?</label>
+            <input type="checkbox" class="custom-control-input" id="isFeatured">
+        </div>*@
 
-    <label>Description</label>
-    <input name="Description" />
+        <div class="custom-control custom-switch">
 
-    <br />
+            <label>Is Featured?</label>
+            <input type="checkbox" name="isFeatured" value="true" />
+            <input type="hidden" value="false" name="isFeatured" />
+        </div>
 
-    <label>Image</label>
-    <input type="hidden" id="ImageURL" name="ImageURL"  />
-    <input id="imageUpload" name="Image" type="file" accept=".png,.jpg"/>
+        @*<input type="radio" name="isFeatured" value="True"/>True
+        <input type="radio" name="isFeatured" value="False"/>False*@
 
-    <img id="categoryImage"  />
 
-    <br />
+        <button class="aa-browse-btn btn" type="submit">Save</button>
+    </form>
+</div>
 
-    <button type="submit">Save</button>
-</form>
 
 <script>
     $("#imageUpload").change(function () {

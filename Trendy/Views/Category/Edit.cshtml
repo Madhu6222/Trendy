@@ -4,22 +4,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Category</h2>
+<div class="container product-search-bar">
 
-<form method="post">
+    <form method="post">
 
-    <input type="hidden" name="ID" value="@Model.ID" />
+        <h2>Edit Category</h2>
+        <input type="hidden" name="ID" value="@Model.ID" />
 
 
-    <label>Name</label>
-    <input name="Name" value="@Model.Name" />
+        <label>Name</label>
+        <input class="form-control" name="Name" value="@Model.Name" />
 
-    <br />
+        <br />
 
-    <label>Description</label>
-    <input name="Description" value="@Model.Description" />
+        <label>Description</label>
+        <input class="form-control" name="Description" value="@Model.Description" />
 
-    <br />
+        <br />
 
-    <button type="submit">Save</button>
-</form>
+        <label>Image</label>
+        <input type="hidden" id="ImageURL" name="ImageURL" />
+        <input id="imageUpload" name="Image"  type="file" accept=".png,.jpg" />
+
+        <img id="categoryImage" />
+
+        <br />
+
+        <div class="custom-control custom-switch">
+
+            <label>Is Featured?</label>
+            <input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured"/>
+
+        </div>
+
+        <button type="submit" class="aa-browse-btn btn">Save</button>
+    </form>
+</div>
+
+<script>
+    $("#imageUpload").change(function () {
+        var elements = this;
+        var formData = new FormData();
+
+        var totalFiles = elements.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = elements.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax(
+            {
+                type: "Post",
+                url: '/Shared/UploadImage',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+
+                success: function (result) {
+
+                    console.log(result);
+
+                    if (result.Success) {
+                        $("#ImageURL").val(result.ImageURL);
+                        $("#categoryImage").attr("src", result.ImageURL);
+                    }
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+
+
+            });
+    });
+
+</script>
