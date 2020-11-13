@@ -1,10 +1,12 @@
-﻿@model Category
+﻿
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/placeholder-image.png";
 }
 
-<div class="container product-search-bar">
+
+<div>
 
     <form method="post">
 
@@ -24,7 +26,7 @@
 
         <label>Image</label>
         <input type="hidden" id="ImageURL" name="ImageURL" />
-        <input id="imageUpload" name="Image"  type="file" accept=".png,.jpg" />
+        <input id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
 
         <img id="categoryImage" />
 
@@ -33,7 +35,7 @@
         <div class="custom-control custom-switch">
 
             <label>Is Featured?</label>
-            <input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured"/>
+            <input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured" />
 
         </div>
 

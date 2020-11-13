@@ -1,22 +1,23 @@
-﻿@model List<Product>
+﻿@model CategorySearchViewModel
 @{
-    ViewBag.Title = "ProductTable";
+    ViewBag.Title = "CategoryTable";
 
 }
 
+
 <ul class="nav  aa-products-tab">
 
-    <li class="active"><a href="#"><h2>Products</h2></a></li>
+    <li class="active"><a href="#" ><h2>Categories</h2></a></li>
 </ul>
 
 <div>
-    <form >
+    <form>
         <h3>Search</h3>
         <div class="row">
-            
+
             <div class="col-md-3">
-                <div class="form-group">  
-                 <input name="Search" id="searchTxt" class="form-control"  placeholder="Search" >
+                <div class="form-group">
+                    <input name="Search" id="searchTxt" class="form-control" placeholder="Search">
                 </div>
             </div>
             <div class="col-md-4">
@@ -24,7 +25,7 @@
 
                     <div class="row">
                         <div class="col-md-3">
-                            <button type="button" id="searchBtn" class="btn aa-browse-btn" >Search</button>
+                            <button type="button" id="searchBtn" class="btn aa-browse-btn">Search</button>
                         </div>
                         <div class="col-md-6">
                             <button type="button" id="newBtn" class="btn aa-browse-btn">New</button>
@@ -35,69 +36,63 @@
             </div>
         </div>
     </form>
-
-    @*<button type="button" id="searchBtn" class="aa-browse-btn">Search</button>*@
 </div>
-
-<br />
 
 <div id="dataContainer" class="table-responsive">
     <table class="table">
         <thead>
             <tr>
-                <td>Product Name</td>
-                <td>Category</td>
-                <td>Price</td>
+                <td>Category Name</td>
+                <td>Products</td>
                 <td>Actions</td>
             </tr>
         </thead>
         <tbody>
-
-            @foreach (var product in Model)
+            @if (Model.Categories != null && Model.Categories.Count > 0)
             {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        @if (product.Category != null)
-                        {
-                            <text>@product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-                    </td>
-                    <td>@product.Price</td>
-                    <td>
-                        <button class="aa-browse-btn btn editProductBtn" data-id="@product.ID">Edit</button>
-                        <button class="aa-browse-btn btn deleteProductBtn" data-id="@product.ID">Delete</button>
-                    </td>
-                </tr>
 
-             }
+                foreach (var category in Model.Categories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td>
+                            @if (category.Products != null)
+                            {
+                                <span>@category.Products.Count</span>
+                            }
+                            else
+                            {
+                                <text>-</text>
+                            }
+                        </td>
+                        <td>
+                            <button class="aa-browse-btn btn editProductBtn" data-id="@category.ID">Edit</button>
+                            <button class="aa-browse-btn btn deleteProductBtn" data-id="@category.ID">Delete</button>
+                        </td>
+                    </tr>
+
+                }
+            }
 
 
-            
+
         </tbody>
     </table>
 </div>
 
-
-
-
 <script>
       $(document).ready(function () {
 
-        //  $("#tblContainer ").on("click","#searchBtn" ,function () {
           $("#searchBtn" ).on("click",function () {
-              
+
 
               var searchValue = $('#searchTxt').val();
-              console.log(searchValue);
+             
+              
               $.ajax(
                   {
                       type: "Post",
-                      url: '@Url.Action("ProductTable")',
+                      url: '@Url.Action("CategoryTable")',
                       data: { search: searchValue } ,
 
                       success: function (result) {
@@ -111,15 +106,14 @@
                   });
           });
           $("#newBtn").on("click", function () {
-              
+
                 $.ajax({
                     type: "Get",
-                    url: "/Product/Create",
+                    url: "/Category/Create",
                     success: function (result) {
-
                         
                         $('#actionContainer').html(result);
-                        
+                        focusAction();
                     },
                     error: function (result) {
                         console.log(result);
@@ -130,18 +124,18 @@
 
           });
           $(".editProductBtn").on("click", function () {
-              
+
               $.ajax({
-                 
-                  url: "/Product/Edit",
+
+                  url: "/Category/Edit",
                   data: {
                       ID: $(this).attr("data-id")
                   },
                   success: function (result) {
 
-                     
+                      
                       $('#actionContainer').html(result);
-                     
+                      focusAction();
                   },
                   error: function (result) {
                       console.log(result);
@@ -160,7 +154,7 @@
 
                   $.ajax({
                       type: "Post",
-                      url: "/Product/Delete",
+                      url: "/Category/Delete",
                       data: {
                           ID: $(this).attr("data-id")
                       },
@@ -168,7 +162,7 @@
 
                           
                           $('#tblContainer').html(result);
-                          
+                         
                       },
                       error: function (result) {
                           console.log(result);
@@ -180,5 +174,11 @@
               }
           });
       });
-</script>
 
+    function focusAction()
+    {
+        $('html,body').animate({
+            scrollTop: $("#actionContainer").offset.top -100
+        }, 1000)
+    }
+</script>

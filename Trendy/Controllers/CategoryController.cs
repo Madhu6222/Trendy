@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Trendy.Entities;
 using Trendy.Services;
+using Trendy.ViewModels;
 
 namespace Trendy.Controllers
 {
@@ -13,55 +14,105 @@ namespace Trendy.Controllers
         CategoryService categoryService = new CategoryService();
 
 
-        [HttpGet]
+        
         public ActionResult Index()
         {
-            var categories = categoryService.GetCategories();
-            return View(categories);
+            
+            return View();
+        }
+
+        //[HttpGet]
+        //public ActionResult CategoryTable()
+        //{
+        //    var categories = categoryService.GetCategories();
+
+        //    return PartialView(categories);
+        //}
+
+        //[HttpPost]
+        public ActionResult CategoryTable(string search)
+        {
+            CategorySearchViewModel model = new CategorySearchViewModel();
+
+           
+            model.Categories = categoryService.GetCategories();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                model.SearchTerm = search;
+                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+
+            return PartialView("CategoryTable", model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            NewCategoryViewModel model = new NewCategoryViewModel();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(Category category)
+        public ActionResult Create(NewCategoryViewModel model)
         {
-            categoryService.SaveCategory(category);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var newCategory = new Category();
+                newCategory.Name = model.Name;
+                newCategory.Description = model.Description;
+                newCategory.ImageURL = model.ImageURL;
+                newCategory.isFeatured = model.isFeatured;
+
+                categoryService.SaveCategory(newCategory);
+
+                return RedirectToAction("CategoryTable");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(500);
+            }
         }
 
         [HttpGet]
         public ActionResult Edit(int ID)
         {
+            EditCategoryViewModel model = new EditCategoryViewModel();
+
             var category = categoryService.GetCategory(ID);
 
-            return View(category);
+            model.ID = category.ID;
+            model.Name = category.Name;
+            model.Description = category.Description;
+            model.ImageURL = category.ImageURL;
+            model.isFeatured = category.isFeatured;
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(EditCategoryViewModel model)
         {
-            categoryService.UpdateCategory(category);
-            return RedirectToAction("Index");
+            var existingCategory = categoryService.GetCategory(model.ID);
+            existingCategory.Name = model.Name;
+            existingCategory.Description = model.Description;
+            existingCategory.ImageURL = model.ImageURL;
+            existingCategory.isFeatured = model.isFeatured;
+
+            categoryService.UpdateCategory(existingCategory);
+
+            return RedirectToAction("CategoryTable");
         }
 
-        [HttpGet]
+
+        [HttpPost]
         public ActionResult Delete(int ID)
         {
-            var category = categoryService.GetCategory(ID);
-
-            return View(category);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(Category category)
-        {
             
-            categoryService.DeleteCategory(category.ID);
-            return RedirectToAction("Index");
+            categoryService.DeleteCategory(ID);
+            return RedirectToAction("CategoryTable");
         }
     }
 }

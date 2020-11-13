@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trendy.Database;
 using Trendy.Entities;
+using System.Data.Entity;
 
 namespace Trendy.Services
 {
@@ -23,9 +24,10 @@ namespace Trendy.Services
         {
             using (var context = new TrendyDbContext())
             {
-                return context.Categories.ToList();
+                return context.Categories.Include(x=>x.Products).ToList();
             }
         }
+
 
         public List<Category> GetFeaturedCategories()
         {

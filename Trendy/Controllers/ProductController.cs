@@ -46,13 +46,15 @@ namespace Trendy.Controllers
         {
             CategoryService categoryService = new CategoryService();
 
-            var categories = categoryService.GetCategories();
+            NewProductViewModel model = new NewProductViewModel();
 
-            return PartialView(categories);
+            model.AvailableCategories = categoryService.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Create(NewCategoryViewModel model)
+        public ActionResult Create(NewProductViewModel model)
         {
             CategoryService categoryService = new CategoryService();
 

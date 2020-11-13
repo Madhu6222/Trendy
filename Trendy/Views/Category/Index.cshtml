@@ -4,9 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container product-search-bar">
+    <div id="tblContainer">
 
-@foreach (var category in Model)
-{
-    <h1>@category.Name</h1>
-}
+        @{
+            Html.RenderAction("CategoryTable");
+
+        }
+    </div>
+    <hr />
+
+    <div id="actionContainer">
+
+    </div>
+
+</div>
