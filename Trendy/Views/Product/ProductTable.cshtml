@@ -71,6 +71,7 @@
                     <td>
                         <button class="aa-browse-btn btn editProductBtn" data-id="@product.ID">Edit</button>
                         <button class="aa-browse-btn btn deleteProductBtn" data-id="@product.ID">Delete</button>
+                        <button class="aa-browse-btn btn addToCartBtn" data-id="@product.ID">Add To Cart</button>
                     </td>
                 </tr>
 
@@ -119,7 +120,7 @@
 
                         
                         $('#actionContainer').html(result);
-                        
+                        focusAction();
                     },
                     error: function (result) {
                         console.log(result);
@@ -141,7 +142,7 @@
 
                      
                       $('#actionContainer').html(result);
-                     
+                      focusAction();
                   },
                   error: function (result) {
                       console.log(result);
@@ -152,33 +153,63 @@
 
           });
           $(".deleteProductBtn").on("click", function () {
-              alert("Delete btn clicked");
+              
 
-              var confirmDelete = confirm("Are you sure you want to delete this product?");
+              swal({
+                  title: "Confirm?",
+                  text: "Are you sure you want to delete this product?",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+                  .then((willDelete) => {
+                      if (willDelete) {
 
-              if (confirmDelete) {
+                          $.ajax({
+                              type: "Post",
+                              url: "/Product/Delete",
+                              data: {
+                                  ID: $(this).attr("data-id")
+                              },
+                              success: function (result) {
 
-                  $.ajax({
-                      type: "Post",
-                      url: "/Product/Delete",
-                      data: {
-                          ID: $(this).attr("data-id")
-                      },
-                      success: function (result) {
+                                  $('#tblContainer').html(result);
+                                  swal("Product deleted Successfully!", {
+                                      icon: "success",
+                                  });
+                              },
+                              error: function (result) {
+                                  console.log(result);
+                              }
+
 
                           
-                          $('#tblContainer').html(result);
-                          
-                      },
-                      error: function (result) {
-                          console.log(result);
+                         });
+                      } else {
+                          swal("Your product is safe!");
                       }
-
-
                   });
 
-              }
+              
           });
+
+          var products = [];
+
+          $(".addToCartBtn").on("click", function () {
+              var productID = $(this).attr("data-id");
+              products.push(productID);
+              $.cookie('CartProducts', products.join('-'), {path: '/' });
+              alert("Product added to cart.");
+
+          });
+
       });
+
+
+    function focusAction() {
+        $('html, body').animate({
+            scrollTop: $("#actionContainer").offset().top - 100
+        }, 1000)
+    }
 </script>
 

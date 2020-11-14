@@ -1,90 +1,98 @@
 ﻿
 @{
-    ViewBag.Title = "Create";
-
+	ViewBag.Title = "Create";
+	var imageURL = "/img/testimonial-img-1.jpg";
 }
 
 
-<div >
 
-    <form method="post" class="aa-login-form">
-        <h2>Create Category</h2>
-        <label>Name</label>
-        <input class="form-control" name="Name" />
+<form method="post" class="aa-login-form">
+	<div class="row">
 
-        <br />
+		<h2 class="category-crud-heading">Create Category</h2>
+		<div class="col-md-8">
 
-        <label>Description</label>
-        <input class="form-control" name="Description" />
+				<label>Name</label>
+				<input class="form-control" name="Name" />
 
-        <br />
+				<br />
 
-        <label>Image</label>
-        <input type="hidden" id="ImageURL" name="ImageURL" />
-        <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+				<label>Description</label>
+				<input class="form-control" name="Description" />
 
-        <img  id="categoryImage" />
+				<br />
 
+				<label>Image</label>
+				<input type="hidden" id="ImageURL" name="ImageURL" />
+				<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+		</div>
+		<div class="col-md-4">
 
-        <br />
+			<div class="thumb">
 
-        @*<div class="custom-control custom-switch">
-            <label class="custom-control-label" for="isFeatured">Is Featured?</label>
-            <input type="checkbox" class="custom-control-input" id="isFeatured">
-        </div>*@
+				<img class="img-thumbnail img-fluid" src="@imageURL" id="categoryImage" />
 
-        <div class="custom-control custom-switch">
-
-            <label>Is Featured?</label>
-            <input type="checkbox" name="isFeatured" value="true" />
-            <input type="hidden" value="false" name="isFeatured" />
-        </div>
-
-        @*<input type="radio" name="isFeatured" value="True"/>True
-        <input type="radio" name="isFeatured" value="False"/>False*@
+			</div>
+		</div>
+	</div>
 
 
-        <button class="aa-browse-btn btn" type="submit">Save</button>
-    </form>
-</div>
+
+	<br />
+
+
+	<div class="custom-control custom-switch">
+
+		<label>Is Featured?</label>
+		<input type="checkbox" name="isFeatured" value="true" />
+		<input type="hidden" value="false" name="isFeatured" />
+	</div>
+
+	@*<input type="radio" name="isFeatured" value="True"/>True
+	<input type="radio" name="isFeatured" value="False"/>False*@
+
+
+	<button class="aa-browse-btn btn" type="submit">Save</button>
+</form>
+
 
 
 <script>
-    $("#imageUpload").change(function () {
-        var elements = this;
-        var formData = new FormData();
+	$("#imageUpload").change(function () {
+		var elements = this;
+		var formData = new FormData();
 
-        var totalFiles = elements.files.length;
+		var totalFiles = elements.files.length;
 
-        for (var i = 0; i < totalFiles; i++) {
-            var file = elements.files[i];
-            formData.append("Photo", file);
-        }
+		for (var i = 0; i < totalFiles; i++) {
+			var file = elements.files[i];
+			formData.append("Photo", file);
+		}
 
-        $.ajax(
-            {
-                type: "Post",
-                url: '/Shared/UploadImage',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
+		$.ajax(
+			{
+				type: "Post",
+				url: '/Shared/UploadImage',
+				data: formData,
+				dataType: 'json',
+				contentType: false,
+				processData: false,
 
-                success: function (result) {
+				success: function (result) {
 
-                    console.log(result);
+					console.log(result);
 
-                    if (result.Success) {
-                        $("#ImageURL").val(result.ImageURL);
-                        $("#categoryImage").attr("src", result.ImageURL);
-                    }
-                },
-                error: function (result) {
-                    console.log(result);
-                }
+					if (result.Success) {
+						$("#ImageURL").val(result.ImageURL);
+						$("#categoryImage").attr("src", result.ImageURL);
+					}
+				},
+				error: function (result) {
+					console.log(result);
+				}
 
 
-            });
-    });
+			});
+	});
 
 </script>

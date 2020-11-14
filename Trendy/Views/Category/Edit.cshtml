@@ -1,84 +1,100 @@
 ﻿
 @{
-    ViewBag.Title = "Edit";
-
-    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/placeholder-image.png";
+	ViewBag.Title = "Edit";
+	var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/img/testimonial-img-1.jpg";
 }
 
 
-<div>
-
-    <form method="post">
-
-        <h2>Edit Category</h2>
-        <input type="hidden" name="ID" value="@Model.ID" />
 
 
-        <label>Name</label>
-        <input class="form-control" name="Name" value="@Model.Name" />
+<form method="post">
 
-        <br />
+	<div class="row">
 
-        <label>Description</label>
-        <input class="form-control" name="Description" value="@Model.Description" />
+		<h2 class="category-crud-heading">Edit Category</h2>
+		<div class="col-md-8">
 
-        <br />
+			<input type="hidden" name="ID" value="@Model.ID" />
 
-        <label>Image</label>
-        <input type="hidden" id="ImageURL" name="ImageURL" />
-        <input id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
 
-        <img id="categoryImage" />
+			<label>Name</label>
+			<input class="form-control" name="Name" value="@Model.Name" />
 
-        <br />
+			<br />
 
-        <div class="custom-control custom-switch">
+			<label>Description</label>
+			<input class="form-control" name="Description" value="@Model.Description" />
 
-            <label>Is Featured?</label>
-            <input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured" />
+			<br />
 
-        </div>
+			<label>Image</label>
+			<input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL"  />
+			<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
 
-        <button type="submit" class="aa-browse-btn btn">Save</button>
-    </form>
-</div>
+			<br />
+
+			<div class="custom-control custom-switch">
+
+				<label>Is Featured?</label>
+				<input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured" />
+
+			</div>
+
+			<button type="submit" class="aa-browse-btn btn">Save</button>
+		</div>
+		<div class="col-md-4">
+
+			<div class="thumb">
+
+				<img class="img-thumbnail img-fluid" src="@imageURL" id="categoryImage" />
+
+			</div>
+
+		</div>
+	</div>
+
+
+	<hr />
+
+</form>
+
 
 <script>
-    $("#imageUpload").change(function () {
-        var elements = this;
-        var formData = new FormData();
+	$("#imageUpload").change(function () {
+		var elements = this;
+		var formData = new FormData();
 
-        var totalFiles = elements.files.length;
+		var totalFiles = elements.files.length;
 
-        for (var i = 0; i < totalFiles; i++) {
-            var file = elements.files[i];
-            formData.append("Photo", file);
-        }
+		for (var i = 0; i < totalFiles; i++) {
+			var file = elements.files[i];
+			formData.append("Photo", file);
+		}
 
-        $.ajax(
-            {
-                type: "Post",
-                url: '/Shared/UploadImage',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
+		$.ajax(
+			{
+				type: "Post",
+				url: '/Shared/UploadImage',
+				data: formData,
+				dataType: 'json',
+				contentType: false,
+				processData: false,
 
-                success: function (result) {
+				success: function (result) {
 
-                    console.log(result);
+					console.log(result);
 
-                    if (result.Success) {
-                        $("#ImageURL").val(result.ImageURL);
-                        $("#categoryImage").attr("src", result.ImageURL);
-                    }
-                },
-                error: function (result) {
-                    console.log(result);
-                }
+					if (result.Success) {
+						$("#ImageURL").val(result.ImageURL);
+						$("#categoryImage").attr("src", result.ImageURL);
+					}
+				},
+				error: function (result) {
+					console.log(result);
+				}
 
 
-            });
-    });
+			});
+	});
 
 </script>
