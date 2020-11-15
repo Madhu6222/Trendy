@@ -49,10 +49,13 @@ namespace Trendy.Services
             }
         }
 
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(int pageNo)
         {
+            int pageSize = 5;
+
             using (var context = new TrendyDbContext())
             {
+                //return context.Products.OrderBy(x=>x.Name).Skip((pageNo-1)* pageSize).Take(pageSize).Include(c => c.Category).ToList();
                 return context.Products.Include(c => c.Category).ToList();
             }
         }

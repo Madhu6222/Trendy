@@ -12,19 +12,22 @@
 		<h2 class="category-crud-heading">Create Category</h2>
 		<div class="col-md-8">
 
-				<label>Name</label>
-				<input class="form-control" name="Name" />
+			<label>Name</label>
+			<input class="form-control" name="Name" />
 
-				<br />
+			<br />
 
-				<label>Description</label>
-				<input class="form-control" name="Description" />
+			<label>Description</label>
+			<input class="form-control" name="Description" />
 
-				<br />
+			<br />
 
-				<label>Image</label>
-				<input type="hidden" id="ImageURL" name="ImageURL" />
-				<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+			<label>Image</label>
+			<input type="hidden" id="ImageURL" name="ImageURL" />
+			<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+
+			<br />
+
 		</div>
 		<div class="col-md-4">
 
@@ -52,6 +55,7 @@
 	<input type="radio" name="isFeatured" value="False"/>False*@
 
 
+	<button class="aa-browse-btn btn" id="cancelBtn" type="button">Cancel</button>
 	<button class="aa-browse-btn btn" id="saveBtn" type="button">Add</button>
 </form>
 
@@ -98,7 +102,7 @@
 		$("#saveBtn" ).on("click",function () {
 
 
-		$.ajax(
+			$.ajax(
 			{
 				type: "Post",
 				url: '@Url.Action("Create", "Category")',
@@ -115,6 +119,10 @@
 
 
 			});
+		});
+	$("#cancelBtn").click(function () {
+		$("#actionContainer").html("");
+		focusAction("tblContainer");
 	});
 
 </script>

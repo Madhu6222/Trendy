@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model ProductSearchViewModel
 @{
     ViewBag.Title = "ProductTable";
 
@@ -23,8 +23,11 @@
                 <div class="form-group">
 
                     <div class="row">
-                        <div class="col-md-3">
-                            <button type="button" id="searchBtn" class="btn aa-browse-btn" >Search</button>
+                        <div class="col-md-3 col-sm-2">
+                            <button type="button" id="searchBtn" class="btn aa-browse-btn">Search</button>
+                        </div>
+                        <div class="col-md-3 col-sm-2">
+                            <button type="button" id="resetBtn" class="btn aa-browse-btn">Reset</button>
                         </div>
                         <div class="col-md-6">
                             <button type="button" id="newBtn" class="btn aa-browse-btn">New</button>
@@ -35,175 +38,245 @@
             </div>
         </div>
     </form>
-
-    @*<button type="button" id="searchBtn" class="aa-browse-btn">Search</button>*@
 </div>
 
 <br />
 
 <div id="dataContainer" class="table-responsive">
-    <table class="table">
+    <table id="ProductsTable" class="table">
         <thead>
             <tr>
-                <td>Product Name</td>
-                <td>Category</td>
-                <td>Price</td>
-                <td>Actions</td>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+            @if (Model.Products != null && Model.Products.Count > 0)
+             {
 
-            @foreach (var product in Model)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        @if (product.Category != null)
-                        {
-                            <text>@product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-                    </td>
-                    <td>@product.Price</td>
-                    <td>
-                        <button class="aa-browse-btn btn editProductBtn" data-id="@product.ID">Edit</button>
-                        <button class="aa-browse-btn btn deleteProductBtn" data-id="@product.ID">Delete</button>
-                        <button class="aa-browse-btn btn addToCartBtn" data-id="@product.ID">Add To Cart</button>
-                    </td>
-                </tr>
+                foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>
+                            @if (product.Category != null)
+                            {
+                                <text>@product.Category.Name</text>
+                            }
+                            else
+                            {
+                                <text>-</text>
+                            }
+                        </td>
+                        <td>@product.Price</td>
+                        <td>
+                            <button class="aa-browse-btn btn editProductBtn" data-id="@product.ID">Edit</button>
+                            <button class="aa-browse-btn btn deleteProductBtn" data-id="@product.ID">Delete</button>
+                            <button class="aa-browse-btn btn addToCartBtn" data-id="@product.ID">Add To Cart</button>
+                        </td>
+                    </tr>
+
+                }
+
+             }
+             else
+             {
+                 <tr>
+                     <td class="text-danger">No Products Found.</td>
+                 </tr>
 
              }
 
 
-            
+
+
         </tbody>
     </table>
+    @*<div>
+        @if (Model.PageNo!=1)
+        {
+
+            <button class="aa-browse-btn btn pageButtons" data-pageNo="@(Model.PageNo - 1)">Previous</button>
+
+        }
+        <button class="aa-browse-btn btn pageButtons" data-pageNo="@(Model.PageNo + 1)">Next</button>
+    </div>*@
 </div>
 
 
 
 
 <script>
-      $(document).ready(function () {
-
-        //  $("#tblContainer ").on("click","#searchBtn" ,function () {
-          $("#searchBtn" ).on("click",function () {
 
 
-              var searchValue = $('#searchTxt').val();
-              console.log(searchValue);
-              $.ajax(
-                  {
-                      type: "Post",
-                      url: '@Url.Action("ProductTable", "Product")',
-                      data: { search: searchValue } ,
+         
+    $(document).ready(function () {
 
-                      success: function (result) {
-                          $("#tblContainer").html(result);
+        $("#ProductsTable").DataTable();
 
-                      },
-                      error: function (result) {
-                          console.log(result);
-                      }
+        $(".pageButtons").on("click", function () {
 
-                  });
-          });
-          $("#newBtn").on("click", function () {
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("ProductTable", "Product")',
+                data: {
+                    pageNo: $(this).attr("data-pageNo")
+                },
+                success: function (result) {
 
-                $.ajax({
-                    type: "Get",
-                    url: '@Url.Action("Create", "Product")',
+
+                    $('#tblContainer').html(result);
+
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+
+
+            });
+
+        });
+
+    //  $("#tblContainer ").on("click","#searchBtn" ,function () {
+        $("#searchBtn" ).on("click",function () {
+
+
+            var searchValue = $('#searchTxt').val();
+            console.log(searchValue);
+            $.ajax(
+                {
+                    type: "Post",
+                    url: '@Url.Action("ProductTable", "Product")',
+                    data: { search: searchValue } ,
+
                     success: function (result) {
+                        $("#tblContainer").html(result);
 
-
-                        $('#actionContainer').html(result);
-                        focusAction("actionContainer");
                     },
                     error: function (result) {
                         console.log(result);
                     }
 
+                });
+        });
+
+        $("#resetBtn" ).on("click",function () {
+
+
+            var searchValue = '';
+            console.log(searchValue);
+            $.ajax(
+                {
+                    type: "Post",
+                    url: '@Url.Action("ProductTable", "Product")',
+                    data: { search: searchValue } ,
+
+                    success: function (result) {
+                        $("#tblContainer").html(result);
+
+                    },
+                    error: function (result) {
+                        console.log(result);
+                    }
 
                 });
+        });
 
-          });
-          $(".editProductBtn").on("click", function () {
+        $("#newBtn").on("click", function () {
 
-              $.ajax({
-
-                  url: '@Url.Action("Edit", "Product")',
-                  data: {
-                      ID: $(this).attr("data-id")
-                  },
-                  success: function (result) {
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("Create", "Product")',
+                success: function (result) {
 
 
-                      $('#actionContainer').html(result);
-                      focusAction("actionContainer");
-                  },
-                  error: function (result) {
-                      console.log(result);
-                  }
+                    $('#actionContainer').html(result);
+                    focusAction("actionContainer");
+                },
+                error: function (result) {
+                    console.log(result);
+                }
 
 
-              });
+            });
 
-          });
-          $(".deleteProductBtn").on("click", function () {
+        });
+        $(".editProductBtn").on("click", function () {
 
+            $.ajax({
 
-              swal({
-                  title: "Confirm?",
-                  text: "Are you sure you want to delete this product?",
-                  icon: "warning",
-                  buttons: true,
-                  dangerMode: true,
-              })
-                  .then((willDelete) => {
-                      if (willDelete) {
-
-                          $.ajax({
-                              type: "Post",
-                              url: '@Url.Action("Delete", "Product")',
-                              data: {
-                                  ID: $(this).attr("data-id")
-                              },
-                              success: function (result) {
-
-                                  $('#tblContainer').html(result);
-                                  swal("Product deleted Successfully!", {
-                                      icon: "success",
-                                  });
-                              },
-                              error: function (result) {
-                                  console.log(result);
-                              }
+                url: '@Url.Action("Edit", "Product")',
+                data: {
+                    ID: $(this).attr("data-id")
+                },
+                success: function (result) {
 
 
+                    $('#actionContainer').html(result);
+                    focusAction("actionContainer");
+                },
+                error: function (result) {
+                    console.log(result);
+                }
 
-                         });
-                      } else {
-                          swal("Your product is safe!");
-                      }
-                  });
+
+            });
+
+        });
+        $(".deleteProductBtn").on("click", function () {
 
 
-          });
+            swal({
+                title: "Confirm?",
+                text: "Are you sure you want to delete this product?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
 
-          var products = [];
+                        $.ajax({
+                            type: "Post",
+                            url: '@Url.Action("Delete", "Product")',
+                            data: {
+                                ID: $(this).attr("data-id")
+                            },
+                            success: function (result) {
 
-          $(".addToCartBtn").on("click", function () {
-              var productID = $(this).attr("data-id");
-              products.push(productID);
-              $.cookie('CartProducts', products.join('-'), {path: '/' });
-              alert("Product added to cart.");
+                                $('#tblContainer').html(result);
+                                swal("Product deleted Successfully!", {
+                                    icon: "success",
+                                });
+                            },
+                            error: function (result) {
+                                console.log(result);
+                            }
 
-          });
 
-      });
+
+                        });
+                    } else {
+                        swal("Your product is safe!");
+                    }
+                });
+
+
+        });
+
+        var products = [];
+
+        $(".addToCartBtn").on("click", function () {
+            var productID = $(this).attr("data-id");
+            products.push(productID);
+            $.cookie('CartProducts', products.join('-'), {path: '/' });
+            alert("Product added to cart.");
+
+        });
+
+    });
 
     function focusAction(controlToFocus) {
         $('html, body').animate({

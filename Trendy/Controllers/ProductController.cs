@@ -11,35 +11,38 @@ namespace Trendy.Controllers
 {
     public class ProductController : Controller
     {
-        //ProductsService productsService = new ProductsService();
-        //CategoryService categoryService = new CategoryService();
-
 
         public ActionResult Index()
         {
             return View();
         }
 
-        [HttpGet]
-        public ActionResult ProductTable()
-        {
-            var products = ProductsService.Instance.GetProducts();
+        //[HttpGet]
+        //public ActionResult ProductTable()
+        //{
+        //    var products = ProductsService.Instance.GetProducts();
 
-            return PartialView(products);
-        }
+        //    return PartialView(products);
+        //}
 
-        [HttpPost]
-        public ActionResult ProductTable(string search)
+        //[HttpPost]
+        public ActionResult ProductTable(string search, int? pageNo)
         {
-            var products = ProductsService.Instance.GetProducts();
+
+            ProductSearchViewModel model = new ProductSearchViewModel();
+
+            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+
+            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
 
             if (!string.IsNullOrEmpty(search))
             {
-                products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.SearchTerm = search;
+                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
             }
 
 
-            return PartialView(products);
+            return PartialView(model);
         }
 
         #region Create
@@ -65,6 +68,7 @@ namespace Trendy.Controllers
             newProduct.Description = model.Description;
             newProduct.Price = model.Price;
             newProduct.CategoryID = model.CategoryID;
+            newProduct.ImageURL = model.ImageURL;
            // newProduct.Category = categoryService.GetCategory(model.CategoryID);
 
             ProductsService.Instance.SaveProduct(newProduct);
@@ -86,6 +90,8 @@ namespace Trendy.Controllers
             model.Description = product.Description;
             model.Price = product.Price;
             model.CategoryID = product.Category != null ? product.Category.ID : 0;
+            model.ImageURL = product.ImageURL;
+
             model.AvailableCategories = CategoryService.Instance.GetCategories();
 
             return PartialView(model);
@@ -101,6 +107,12 @@ namespace Trendy.Controllers
 
             existingProduct.Category = null; //mark it null. Because the referncy key is changed below
             existingProduct.CategoryID = model.CategoryID;
+
+            //dont update imageURL if its empty
+            if (!string.IsNullOrEmpty(model.ImageURL))
+            {
+                existingProduct.ImageURL = model.ImageURL;
+            }
 
             ProductsService.Instance.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");

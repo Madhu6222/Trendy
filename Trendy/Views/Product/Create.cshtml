@@ -1,37 +1,65 @@
 ﻿@model NewProductViewModel
 @{
-    ViewBag.Title = "Create";
-
+	ViewBag.Title = "Create";
+	var imageURL = "/img/testimonial-img-1.jpg";
 }
 
-<h2>Create Product</h2>
 
 
-<div class="col-md-6">
-    <div class="aa-myaccount-login">
-        
-        <form action="" id="createProduct" class="aa-login-form">
-            <label>Category</label>
-            <select class="form-control" name="CategoryID">
-                @foreach (var category in Model.AvailableCategories)
-                {
+<form action="" id="createProduct" class="aa-login-form">
+	<div class="row">
+		<h2 class="category-crud-heading">Create Product</h2>
+		<div class="col-md-8">
 
-                    <option value="@category.ID">@category.Name</option>
-                }
-            </select><br />
-            <label>Name</label>
-            <input class="form-control" name="Name" /><br />
+			<label>Category</label>
+			<select class="form-control" name="CategoryID">
+				@foreach (var category in Model.AvailableCategories)
+				{
 
-            <label>Description</label>
-            <input class="form-control" name="Description" /><br />
+					<option value="@category.ID">@category.Name</option>
+				}
+			</select>
+			
+			<br />
 
-            <label>Price</label>
-            <input class="form-control" name="Price" />
+			<label>Name</label>
+			<input class="form-control" name="Name" />
+			
+			<br />
 
-            <button type="button" id="saveBtn" class="aa-browse-btn btn">Add</button>
-        </form>
-    </div>
-</div>
+			<label>Description</label>
+			<input class="form-control" name="Description" />
+			
+			<br />
+
+			<label>Price</label>
+			<input class="form-control" name="Price" />
+			
+			<br />
+
+			<label>Image</label>
+			<input type="hidden" id="ImageURL" name="ImageURL" />
+			<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
+
+			<br />
+
+		</div>
+		<div class="col-md-4">
+
+			<div class="thumb">
+
+				<img class="img-thumbnail img-fluid" src="@imageURL" id="productImage" />
+
+			</div>
+		</div>
+	</div>
+	<br />
+
+	<button type="button" id="cancelBtn" class="aa-browse-btn btn">Cancel</button>
+	<button type="button" id="saveBtn" class="aa-browse-btn btn">Add</button>
+</form>
+
+
 
 
 
@@ -40,25 +68,67 @@
 
 <script>
 
-    $("#saveBtn" ).on("click",function () {
-        
+	
+	$("#imageUpload").change(function () {
+		var elements = this;
+		var formData = new FormData();
 
-        $.ajax(
-            {
-                type: "Post",
-                url: '@Url.Action("Create", "Product")',
-                data: $("#createProduct").serialize(),
+		var totalFiles = elements.files.length;
 
-                success: function (result) {
-                    $("#tblContainer").html(result);
-                    $("#actionContainer").html("");
-                    
-                },
-                error: function (result) {
-                    console.log(result);
-                }
+		for (var i = 0; i < totalFiles; i++) {
+			var file = elements.files[i];
+			formData.append("Photo", file);
+		}
+
+		$.ajax(
+			{
+				type: "Post",
+				url: '@Url.Action("UploadImage", "Shared")',
+				data: formData,
+				dataType: 'json',
+				contentType: false,
+				processData: false,
+
+				success: function (result) {
+
+					console.log(result);
+
+					if (result.Success) {
+						$("#ImageURL").val(result.ImageURL);
+						$("#productImage").attr("src", result.ImageURL);
+					}
+				},
+				error: function (result) {
+					console.log(result);
+				}
 
 
-            });
-    });
+			});
+	});
+
+	$("#saveBtn" ).on("click",function () {
+
+
+		$.ajax(
+			{
+				type: "Post",
+				url: '@Url.Action("Create", "Product")',
+				data: $("#createProduct").serialize(),
+
+				success: function (result) {
+					$("#tblContainer").html(result);
+					$("#actionContainer").html("");
+
+				},
+				error: function (result) {
+					console.log(result);
+				}
+
+
+			});
+	});
+	$("#cancelBtn").click(function () {
+		$("#actionContainer").html("");
+		focusAction("tblContainer");
+	});
 </script>

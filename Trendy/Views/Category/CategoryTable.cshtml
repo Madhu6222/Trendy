@@ -24,8 +24,11 @@
                 <div class="form-group">
 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-2">
                             <button type="button" id="searchBtn" class="btn aa-browse-btn">Search</button>
+                        </div>
+                        <div class="col-md-3 col-sm-2">
+                            <button type="button" id="resetBtn" class="btn aa-browse-btn">Reset</button>
                         </div>
                         <div class="col-md-6">
                             <button type="button" id="newBtn" class="btn aa-browse-btn">New</button>
@@ -39,12 +42,12 @@
 </div>
 
 <div id="dataContainer" class="table-responsive">
-    <table class="table">
+    <table id="CategoriesTable" class="table">
         <thead>
             <tr>
-                <td>Category Name</td>
-                <td>Products</td>
-                <td>Actions</td>
+                <th>Category Name</th>
+                <th>Products</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +84,9 @@
 </div>
 
 <script>
-      $(document).ready(function () {
+    $(document).ready(function () {
+
+          $("#CategoriesTable").DataTable();
 
           $("#searchBtn" ).on("click",function () {
 
@@ -93,6 +98,27 @@
                   {
                       type: "Post",
                       url: '@Url.Action("CategoryTable", "Category")',
+                      data: { search: searchValue } ,
+
+                      success: function (result) {
+                          $("#tblContainer").html(result);
+
+                      },
+                      error: function (result) {
+                          console.log(result);
+                      }
+
+                  });
+          });
+           $("#resetBtn" ).on("click",function () {
+
+
+              var searchValue = '';
+              console.log(searchValue);
+              $.ajax(
+                  {
+                      type: "Post",
+                      url: '@Url.Action("ProductTable", "Product")',
                       data: { search: searchValue } ,
 
                       success: function (result) {

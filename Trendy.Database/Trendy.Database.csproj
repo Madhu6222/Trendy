@@ -71,6 +71,10 @@
     <Compile Include="Migrations\202011141247553_ConfigurationTableAdded.designer.cs">
       <DependentUpon>202011141247553_ConfigurationTableAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011151217065_ImageUrlColumnAddedTOProducts.cs" />
+    <Compile Include="Migrations\202011151217065_ImageUrlColumnAddedTOProducts.designer.cs">
+      <DependentUpon>202011151217065_ImageUrlColumnAddedTOProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrendyDbContext.cs" />
@@ -100,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011141247553_ConfigurationTableAdded.resx">
       <DependentUpon>202011141247553_ConfigurationTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011151217065_ImageUrlColumnAddedTOProducts.resx">
+      <DependentUpon>202011151217065_ImageUrlColumnAddedTOProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
