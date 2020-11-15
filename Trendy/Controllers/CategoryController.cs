@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Trendy.Entities;
 using Trendy.Services;
 using Trendy.ViewModels;
+using System.Data.Entity;
 
 namespace Trendy.Controllers
 {
@@ -27,21 +28,30 @@ namespace Trendy.Controllers
         //}
 
         //[HttpPost]
-        public ActionResult CategoryTable(string search)
+        public ActionResult CategoryTable(string search, int? pageNo)
         {
             CategorySearchViewModel model = new CategorySearchViewModel();
 
-           
-            model.Categories = CategoryService.Instance.GetCategories();
+            model.SearchTerm = search;
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
 
-            if (!string.IsNullOrEmpty(search))
+            var totalRecords = CategoryService.Instance.GetCategoriesCount(search);
+            model.Categories = CategoryService.Instance.GetCategories(search, pageNo.Value);
+
+            if (model.Categories !=null)
             {
-                model.SearchTerm = search;
-                model.Categories = model.Categories.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+
+           
+                model.Pager = new Pager(totalRecords, pageNo,3);
+
+                return PartialView("CategoryTable", model);
+
             }
 
-
-            return PartialView("CategoryTable", model);
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         #region Create

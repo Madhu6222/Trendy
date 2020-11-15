@@ -53,7 +53,7 @@ namespace Trendy.Controllers
 
             NewProductViewModel model = new NewProductViewModel();
 
-            model.AvailableCategories = CategoryService.Instance.GetCategories();
+            model.AvailableCategories = CategoryService.Instance.GetAllCategories();
 
             return PartialView(model);
         }
@@ -92,7 +92,7 @@ namespace Trendy.Controllers
             model.CategoryID = product.Category != null ? product.Category.ID : 0;
             model.ImageURL = product.ImageURL;
 
-            model.AvailableCategories = CategoryService.Instance.GetCategories();
+            model.AvailableCategories = CategoryService.Instance.GetAllCategories();
 
             return PartialView(model);
         }

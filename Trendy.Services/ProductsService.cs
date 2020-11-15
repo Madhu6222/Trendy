@@ -55,8 +55,8 @@ namespace Trendy.Services
 
             using (var context = new TrendyDbContext())
             {
-                //return context.Products.OrderBy(x=>x.Name).Skip((pageNo-1)* pageSize).Take(pageSize).Include(c => c.Category).ToList();
-                return context.Products.Include(c => c.Category).ToList();
+                return context.Products.OrderBy(x=>x.Name).Skip((pageNo-1)* pageSize).Take(pageSize).Include(c => c.Category).ToList();
+                //return context.Products.Include(c => c.Category).ToList();
             }
         }
 
