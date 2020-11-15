@@ -12,6 +12,26 @@ namespace Trendy.Services
     public class ProductsService
 
     {
+        #region Singleton 
+        private ProductsService()
+        {
+
+        }
+
+        public static ProductsService Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new ProductsService();
+
+                return instance;
+
+            }
+        }
+        private static ProductsService instance { get; set; }
+
+        #endregion
 
         public Product GetProduct(int ID)
         {

@@ -10,7 +10,6 @@ namespace Trendy.Controllers
 {
     public class ShopController : Controller
     {
-        ProductsService productService = new ProductsService();
         public ActionResult Checkout()
         {
             CheckoutViewModel model = new CheckoutViewModel();
@@ -21,7 +20,7 @@ namespace Trendy.Controllers
             {
                 model.CartProductIDs = cartProductsCookie.Value.Split('-').Select(x => int.Parse(x)).ToList();
 
-                model.CartProducts = productService.GetProductsWithID(model.CartProductIDs);
+                model.CartProducts = ProductsService.Instance.GetProductsWithID(model.CartProductIDs);
             }
 
             return View(model);

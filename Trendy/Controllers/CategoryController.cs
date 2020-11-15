@@ -11,10 +11,7 @@ namespace Trendy.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoryService categoryService = new CategoryService();
-
-
-        
+   
         public ActionResult Index()
         {
             
@@ -35,7 +32,7 @@ namespace Trendy.Controllers
             CategorySearchViewModel model = new CategorySearchViewModel();
 
            
-            model.Categories = categoryService.GetCategories();
+            model.Categories = CategoryService.Instance.GetCategories();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -47,6 +44,7 @@ namespace Trendy.Controllers
             return PartialView("CategoryTable", model);
         }
 
+        #region Create
         [HttpGet]
         public ActionResult Create()
         {
@@ -66,7 +64,7 @@ namespace Trendy.Controllers
                 newCategory.ImageURL = model.ImageURL;
                 newCategory.isFeatured = model.isFeatured;
 
-                categoryService.SaveCategory(newCategory);
+                CategoryService.Instance.SaveCategory(newCategory);
 
                 return RedirectToAction("CategoryTable");
             }
@@ -76,12 +74,16 @@ namespace Trendy.Controllers
             }
         }
 
+        #endregion
+
+        #region Update
+
         [HttpGet]
         public ActionResult Edit(int ID)
         {
             EditCategoryViewModel model = new EditCategoryViewModel();
 
-            var category = categoryService.GetCategory(ID);
+            var category = CategoryService.Instance.GetCategory(ID);
 
             model.ID = category.ID;
             model.Name = category.Name;
@@ -95,23 +97,24 @@ namespace Trendy.Controllers
         [HttpPost]
         public ActionResult Edit(EditCategoryViewModel model)
         {
-            var existingCategory = categoryService.GetCategory(model.ID);
+            var existingCategory = CategoryService.Instance.GetCategory(model.ID);
             existingCategory.Name = model.Name;
             existingCategory.Description = model.Description;
             existingCategory.ImageURL = model.ImageURL;
             existingCategory.isFeatured = model.isFeatured;
 
-            categoryService.UpdateCategory(existingCategory);
+            CategoryService.Instance.UpdateCategory(existingCategory);
 
             return RedirectToAction("CategoryTable");
         }
 
+        #endregion
 
         [HttpPost]
         public ActionResult Delete(int ID)
         {
             
-            categoryService.DeleteCategory(ID);
+            CategoryService.Instance.DeleteCategory(ID);
             return RedirectToAction("CategoryTable");
         }
     }

@@ -10,13 +10,12 @@ namespace Trendy.Controllers
 {
     public class HomeController : Controller
     {
-        CategoryService categoryService = new CategoryService();
 
         public ActionResult Index()
         {
             HomeViewModels model = new HomeViewModels();
 
-            model.FeaturedCategories = categoryService.GetFeaturedCategories();
+            model.FeaturedCategories = CategoryService.Instance.GetFeaturedCategories();
 
             return View(model);
         }

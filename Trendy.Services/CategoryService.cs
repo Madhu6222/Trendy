@@ -12,6 +12,27 @@ namespace Trendy.Services
     public class CategoryService
     {
 
+        #region Singleton 
+        private CategoryService()
+        {
+
+        }
+
+        public static CategoryService Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new CategoryService();
+
+                return instance;
+
+            }
+        }
+        private static CategoryService instance { get; set; }
+
+        #endregion
+
         public Category GetCategory(int ID)
         {
             using (var context = new TrendyDbContext())
