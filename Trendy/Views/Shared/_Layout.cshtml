@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    ConfigurationsService configurationsService = new ConfigurationsService();
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -441,12 +446,12 @@
                                         <div class="aa-footer-widget">
                                             <h3>Contact Us</h3>
                                             <address>
-                                                <p> 25 Astor Pl, NY 10003, USA</p>
-                                                <p><span class="fa fa-phone"></span>+1 212-982-4589</p>
+                                                <p> @configurationsService.GetConfig("CompanyAddress").Value</p>
+                                                <p><span class="fa fa-phone"></span>@configurationsService.GetConfig("CompanyPhone").Value</p>
                                                 <p><span class="fa fa-envelope"></span>dailyshop@gmail.com</p>
                                             </address>
                                             <div class="aa-footer-social">
-                                                <a href="#"><span class="fa fa-facebook"></span></a>
+                                                <a href="@configurationsService.GetConfig("FacebookURL").Value" ><span class="fa fa-facebook"></span></a>
                                                 <a href="#"><span class="fa fa-twitter"></span></a>
                                                 <a href="#"><span class="fa fa-google-plus"></span></a>
                                                 <a href="#"><span class="fa fa-youtube"></span></a>

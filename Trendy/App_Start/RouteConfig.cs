@@ -13,6 +13,13 @@ namespace Trendy
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+                name: "CategoryHome",
+                url: "categories/home",
+                defaults: new { controller = "Category", action = "CategoryTable"}
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -12,8 +12,9 @@ namespace Trendy.Controllers
     public class ProductController : Controller
     {
         ProductsService productsService = new ProductsService();
+        CategoryService categoryService = new CategoryService();
 
-        
+
         public ActionResult Index()
         {
             return View();
@@ -44,7 +45,6 @@ namespace Trendy.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            CategoryService categoryService = new CategoryService();
 
             NewProductViewModel model = new NewProductViewModel();
 
@@ -56,7 +56,7 @@ namespace Trendy.Controllers
         [HttpPost]
         public ActionResult Create(NewProductViewModel model)
         {
-            CategoryService categoryService = new CategoryService();
+
 
             var newProduct = new Product();
             newProduct.Name = model.Name;
@@ -72,15 +72,32 @@ namespace Trendy.Controllers
         [HttpGet]
         public ActionResult Edit(int ID)
         {
+            EditProductViewModel model = new EditProductViewModel();
+
             var product = productsService.GetProduct(ID);
-            
-            return PartialView(product);
+
+            model.ID = product.ID;
+            model.Name = product.Name;
+            model.Description = product.Description;
+            model.Price = product.Price;
+            model.CategoryID = product.Category != null ? product.Category.ID : 0;
+            model.AvailableCategories = categoryService.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(EditProductViewModel model)
         {
-            productsService.UpdateProduct(product);
+            var existingProduct = productsService.GetProduct(model.ID);
+            existingProduct.Name = model.Name;
+            existingProduct.Description = model.Description;
+            existingProduct.Price = model.Price;
+
+            existingProduct.Category = null; //mark it null. Because the referncy key is changed below
+            existingProduct.CategoryID = model.CategoryID;
+
+            productsService.UpdateProduct(existingProduct);
             return RedirectToAction("ProductTable");
         }
 

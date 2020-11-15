@@ -1,21 +1,23 @@
 ﻿@model List<Category>
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container product-search-bar">
-    <div id="tblContainer">
+	<div id="tblContainer">
 
-        @{
-            Html.RenderAction("CategoryTable");
+		@{
+			Html.RenderAction("CategoryTable");
 
-        }
-    </div>
-    <hr />
+		}
+	</div>
+	<hr />
 
-    <div id="actionContainer">
+	<div id="actionContainer">
 
-    </div>
+	</div>
 
 </div>
+
+

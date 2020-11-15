@@ -66,8 +66,8 @@
                             }
                         </td>
                         <td>
-                            <button class="aa-browse-btn btn editProductBtn" data-id="@category.ID">Edit</button>
-                            <button class="aa-browse-btn btn deleteProductBtn" data-id="@category.ID">Delete</button>
+                            <button class="aa-browse-btn btn editCategoryBtn" data-id="@category.ID">Edit</button>
+                            <button class="aa-browse-btn btn deleteCategoryBtn" data-id="@category.ID">Delete</button>
                         </td>
                     </tr>
 
@@ -87,17 +87,17 @@
 
 
               var searchValue = $('#searchTxt').val();
-             
-              
+
+
               $.ajax(
                   {
                       type: "Post",
-                      url: '@Url.Action("CategoryTable")',
+                      url: '@Url.Action("CategoryTable", "Category")',
                       data: { search: searchValue } ,
 
                       success: function (result) {
                           $("#tblContainer").html(result);
-                          
+
                       },
                       error: function (result) {
                           console.log(result);
@@ -109,11 +109,11 @@
 
                 $.ajax({
                     type: "Get",
-                    url: "/Category/Create",
+                    url: '@Url.Action("Create", "Category")',
                     success: function (result) {
-                        
+
                         $('#actionContainer').html(result);
-                        focusAction();
+                        focusAction("actionContainer");
                     },
                     error: function (result) {
                         console.log(result);
@@ -123,19 +123,19 @@
                 });
 
           });
-          $(".editProductBtn").on("click", function () {
+          $(".editCategoryBtn").on("click", function () {
 
               $.ajax({
 
-                  url: "/Category/Edit",
+                  url: '@Url.Action("Edit", "Category")',
                   data: {
                       ID: $(this).attr("data-id")
                   },
                   success: function (result) {
 
-                      
+
                       $('#actionContainer').html(result);
-                      focusAction();
+                      focusAction("actionContainer");
                   },
                   error: function (result) {
                       console.log(result);
@@ -145,7 +145,7 @@
               });
 
           });
-          $(".deleteProductBtn").on("click", function () {
+          $(".deleteCategoryBtn").on("click", function () {
 
               swal({
                   title: "Confirm?",
@@ -159,7 +159,7 @@
 
                           $.ajax({
                               type: "Post",
-                              url: "/Category/Delete",
+                              url: '@Url.Action("Delete", "Category")',
                               data: {
                                   ID: $(this).attr("data-id")
                               },
@@ -182,13 +182,13 @@
                       }
                   });
           });
- 
+
       });
 
-    function focusAction()
-    {
+    function focusAction(controlToFocus) {
         $('html, body').animate({
-            scrollTop: $("#actionContainer").offset().top -100
+            scrollTop: $("#" + controlToFocus).offset().top - 100
         }, 1000)
     }
+
 </script>

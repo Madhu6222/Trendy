@@ -7,7 +7,7 @@
 
 
 
-<form method="post">
+<form method="post" id="editCategory">
 
 	<div class="row">
 
@@ -28,7 +28,7 @@
 			<br />
 
 			<label>Image</label>
-			<input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL"  />
+			<input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
 			<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png,.jpg" />
 
 			<br />
@@ -39,8 +39,8 @@
 				<input type="checkbox" name="isFeatured" value="true" checked="@Model.isFeatured" />
 
 			</div>
-
-			<button type="submit" class="aa-browse-btn btn">Save</button>
+			<button id="cancelBtn" type="button" class="aa-browse-btn btn">Cancel</button>
+			<button type="button" id="editBtn" class="aa-browse-btn btn">Update</button>
 		</div>
 		<div class="col-md-4">
 
@@ -74,7 +74,7 @@
 		$.ajax(
 			{
 				type: "Post",
-				url: '/Shared/UploadImage',
+				url: '@Url.Action("UploadImage", "Shared")',
 				data: formData,
 				dataType: 'json',
 				contentType: false,
@@ -95,6 +95,34 @@
 
 
 			});
+
+	});
+
+	$("#editBtn" ).on("click",function () {
+
+		$.ajax(
+			{
+				type: "Post",
+				url: '@Url.Action("Edit", "Category")',
+				data: $("#editCategory").serialize(),
+
+				success: function (result) {
+					$("#tblContainer").html(result);
+					$("#actionContainer").html("");
+					
+				},
+				error: function (result) {
+					console.log(result);
+				}
+
+
+			});
+
+	});
+
+	$("#cancelBtn").click(function () {
+		$("#actionContainer").html("");
+		focusAction("tableContiner");
 	});
 
 </script>

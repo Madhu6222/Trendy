@@ -6,7 +6,7 @@
 
 
 
-<form method="post" class="aa-login-form">
+<form id="createCategory" class="aa-login-form">
 	<div class="row">
 
 		<h2 class="category-crud-heading">Create Category</h2>
@@ -52,7 +52,7 @@
 	<input type="radio" name="isFeatured" value="False"/>False*@
 
 
-	<button class="aa-browse-btn btn" type="submit">Save</button>
+	<button class="aa-browse-btn btn" id="saveBtn" type="button">Add</button>
 </form>
 
 
@@ -72,7 +72,7 @@
 		$.ajax(
 			{
 				type: "Post",
-				url: '/Shared/UploadImage',
+				url: '@Url.Action("UploadImage", "Shared")',
 				data: formData,
 				dataType: 'json',
 				contentType: false,
@@ -86,6 +86,28 @@
 						$("#ImageURL").val(result.ImageURL);
 						$("#categoryImage").attr("src", result.ImageURL);
 					}
+				},
+				error: function (result) {
+					console.log(result);
+				}
+
+
+			});
+	});
+
+		$("#saveBtn" ).on("click",function () {
+
+
+		$.ajax(
+			{
+				type: "Post",
+				url: '@Url.Action("Create", "Category")',
+				data: $("#createCategory").serialize(),
+
+				success: function (result) {
+					$("#tblContainer").html(result);
+					$("#actionContainer").html("");
+
 				},
 				error: function (result) {
 					console.log(result);

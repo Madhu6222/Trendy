@@ -46,7 +46,7 @@
         $.ajax(
             {
                 type: "Post",
-                url: '@Url.Action("Create")',
+                url: '@Url.Action("Create", "Product")',
                 data: $("#createProduct").serialize(),
 
                 success: function (result) {
