@@ -31,14 +31,14 @@
 			<div class="form-group">
 				<label>Is Featured?</label>
 				<div class="input-group">
-					<div class="radio form-control">
-						<label><input name="isFeatured" type="radio" value="True" @trueChecked /> True</label>
-					</div>
-					<div class="radio form-control">
-						<label><input name="isFeatured" type="radio" value="False" @falseChecked /> False</label>
-					</div>
+
+					<input type="checkbox" name="isFeatured" value="true" />
+					<input type="hidden" value="false" name="isFeatured" />
+
 				</div>
 			</div>
+			<button id="cancelBtn" type="button" class="btn">Cancel</button>
+			<button id="updateBtn" type="button" class="btn">Update</button>
 		</div>
 		<div class="col-md-4">
 			<div class="thumb">
@@ -47,8 +47,6 @@
 		</div>
 	</div>
 
-	<button id="updateBtn" type="button" class="btn btn-primary">Update</button>
-	<button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
 </form>
 
 <script>

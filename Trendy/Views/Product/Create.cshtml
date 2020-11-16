@@ -12,11 +12,11 @@
 		<div class="col-md-8">
 			<div class="form-group">
 				<label>Category</label>
-				<select class="form-control" name="CategoryID">
+				<select class="my-form-style" name="CategoryID">
+					<option value="">Select Category</option>
 					@foreach (var category in Model.AvailableCategories)
 					{
-						<option value="@category.ID">@category.Name</option>
-					}
+				<option value="@category.ID">@category.Name</option>}
 				</select>
 			</div>
 			<div class="form-group">
@@ -36,8 +36,8 @@
 				<input type="hidden" id="ImageURL" name="ImageURL" />
 				<input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
 			</div>
-			<button id="saveBtn" type="button" class="btn btn-primary">Save</button>
-			<button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
+			<button id="cancelBtn" type="button" class="btn">Cancel</button>
+			<button id="saveBtn" type="button" class="btn">Save</button>
 		</div>
 		<div class="col-md-4">
 			<div class="thumb">
@@ -50,6 +50,11 @@
 <script>
 	$('#createProduct').validate({
 		rules: {
+
+			CategoryID: {
+				required: true
+			},
+
 			Name: {
 				required: true,
 				minlength: 5,
@@ -63,6 +68,11 @@
 			}
 		},
 		messages: {
+
+			CategoryID: {
+				required: 'Category is required'
+			},
+
 			Name: {
 				required: 'Name is required',
 				minlength: 'Minimum Length is 5',
@@ -124,7 +134,13 @@
 				focusAction("tableContiner");
 			})
 			.fail(function (XMLHttpRequest, textStatus, errorThrown) {
-				alert("FAIL");
+				swal({
+					title: "Warning",
+					text: "Please enter all valid data in fields.",
+					icon: "warning",
+					button: true,
+					dangerMode: true,
+				});
 			});
 		}
 		else {
@@ -132,7 +148,7 @@
 				title: "Warning",
 				text: "Please enter all valid data in fields.",
 				icon: "warning",
-				buttons: true,
+				button: true,
 				dangerMode: true,
 			});
 		}
