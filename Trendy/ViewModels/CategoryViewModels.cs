@@ -8,19 +8,6 @@ using Trendy.Entities;
 
 namespace Trendy.ViewModels
 {
-    public class NewCategoryViewModel
-    {
-        [Required]
-        [MinLength(5), MaxLength(50)]
-        public string Name { get; set; }
-
-        [MaxLength(500)]
-        public string Description { get; set; }
-
-        public string ImageURL { get; set; }
-
-        public bool isFeatured { get; set; }
-    }
 
     public class CategorySearchViewModel
     {
@@ -30,6 +17,19 @@ namespace Trendy.ViewModels
         public Pager Pager { get; set; }
     }
 
+    public class NewCategoryViewModel
+    {
+        [Required]
+        [MinLength(4), MaxLength(50)]
+        public string Name { get; set; }
+
+        [MaxLength(500)]
+        public string Description { get; set; }
+
+        public string ImageURL { get; set; }
+
+        public bool isFeatured { get; set; }
+    }
     public class EditCategoryViewModel
     {
         public int ID { get; set; }

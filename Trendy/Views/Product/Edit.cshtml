@@ -12,7 +12,8 @@
 
 			<input type="hidden" name="ID" value="@Model.ID" />
 			<label>Category</label>
-			<select class="form-control" name="CategoryID">
+			<select class="form-control" name="CategoryID" required>
+				<option value="">Select Category</option>
 				@foreach (var category in Model.AvailableCategories)
 				{
 					var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
@@ -23,7 +24,7 @@
 			<br />
 
 			<label>Name</label>
-			<input class="form-control" name="Name" value="@Model.Name" />
+			<input class="form-control" name="Name" value="@Model.Name" required/>
 
 			<br />
 
@@ -43,7 +44,7 @@
 			<br />
 
 			<button id="cancelBtn" type="button" class="aa-browse-btn btn">Cancel</button>
-			<button type="button" class="aa-browse-btn btn" id="editBtn">Update</button>
+			<button type="button" class="aa-browse-btn btn" id="updateBtn">Update</button>
 		</div>
 		<div class="col-md-4">
 
@@ -102,10 +103,47 @@
 
 	});
 
-	$("#editBtn" ).on("click",function () {
+	$('#editProduct').validate({
+		rules: {
+			CategoryID: {
+				required: true
 
+			},
 
-		$.ajax(
+			Name: {
+				required: true,
+				minlength: 5,
+				maxlength: 50,
+			},
+			Description: {
+				maxlength: 500
+			},
+			Price: {
+				range: [1, 1000000]
+			}
+		},
+		messages: {
+			CategoryID: {
+				required: 'Category is required'
+			},
+			Name: {
+				required: 'Name is required',
+				minlength: 'Minimum Length is 5',
+				maxlength: 'Maximum Length is 50'
+			},
+			Description: {
+				maxlength: 'Maximum Length is 500'
+			},
+			Price: {
+				range: 'Price is not in range'
+			}
+		}
+	});
+
+	$("#updateBtn" ).on("click",function () {
+
+		if ($("#editProduct").valid()) {
+			$.ajax(
 			{
 				type: "Post",
 				url: '@Url.Action("Edit", "Product")',
@@ -117,11 +155,28 @@
 					return result;
 				},
 				error: function (result) {
-					console.log(result);
+					swal({
+						title: "Warning!",
+						text: "Please enter all valid data in fields.",
+						icon: "warning",
+						button: true,
+						dangerMode: true,
+					});
 				}
 
 
+				});
+		}
+		else
+		{
+			swal({
+				title: "Warning!",
+				text: "Please enter all valid data in fields.",
+				icon: "warning",
+				button: true,
+				dangerMode: true,
 			});
+		}
 	});
 
 	$("#cancelBtn").click(function () {

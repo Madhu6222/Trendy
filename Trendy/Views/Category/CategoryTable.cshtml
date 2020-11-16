@@ -89,7 +89,10 @@
 
             if (Model.Pager.CurrentPage > 1)
             {
-                <button class="aa-browse-btn btn pageButtons" data-pageNo="1">First</button>
+                if (Model.Pager.CurrentPage>=3)
+                {
+                    <button class="aa-browse-btn btn pageButtons" data-pageNo="1">First</button>
+                }
                 <button class="aa-browse-btn btn pageButtons" data-pageNo="@(Model.Pager.CurrentPage - 1)">Previous</button>
             }
 
@@ -102,7 +105,10 @@
 
             if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
-                <button class="aa-browse-btn btn pageButtons" data-pageNo="@(Model.Pager.CurrentPage + 1)">Next</button>
+                if (Model.Pager.CurrentPage <= Model.Pager.TotalPages-2)
+                {
+                    <button class="aa-browse-btn btn pageButtons" data-pageNo="@(Model.Pager.CurrentPage + 1)">Next</button>
+                }
                 <button class="aa-browse-btn btn pageButtons" data-pageNo="@Model.Pager.EndPage">Last</button>
             }
 

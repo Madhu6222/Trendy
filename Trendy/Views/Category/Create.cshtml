@@ -12,8 +12,8 @@
 		<h2 class="category-crud-heading">Create Category</h2>
 		<div class="col-md-8">
 
-			<label>Name</label>
-			<input class="form-control" name="Name" />
+			<label>Name <span class="text-danger">*</span></label>
+			<input class="form-control" name="Name" required />
 
 			<br />
 
@@ -97,9 +97,32 @@
 			});
 	});
 
-		$("#saveBtn" ).on("click",function () {
+	$('#createCategory').validate({
+		rules: {
+			Name: {
+				required: true,
+				minlength: 5,
+				maxlength: 50,
+			},
+			Description: {
+				maxlength: 500
+			}
+		},
+		messages: {
+			Name: {
+				required: 'Name is required',
+				minlength: 'Minimum Length is 5',
+				maxlength: 'Maximum Length is 50'
+			},
+			Description: {
+				maxlength: 'Maximum Length is 500'
+			}
+		}
+	});
 
+	$("#saveBtn" ).on("click",function () {
 
+		if ($("#createCategory").valid()) {
 			$.ajax(
 			{
 				type: "Post",
@@ -112,12 +135,29 @@
 
 				},
 				error: function (result) {
-					console.log(result);
+
+					swal({
+						title: "Warning!",
+						text: "Please enter all valid data in fields.",
+						icon: "warning",
+						button: true,
+						dangerMode: true,
+					});
 				}
 
 
 			});
-		});
+		}
+		else {
+			swal({
+				title: "Warning!",
+				text: "Please enter all valid data in fields.",
+				icon: "warning",
+				button: true,
+				dangerMode: true,
+			});
+		}
+	});
 	$("#cancelBtn").click(function () {
 		$("#actionContainer").html("");
 		focusAction("tblContainer");

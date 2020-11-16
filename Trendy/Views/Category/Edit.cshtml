@@ -18,7 +18,7 @@
 
 
 			<label>Name</label>
-			<input class="form-control" name="Name" value="@Model.Name" />
+			<input class="form-control" name="Name" value="@Model.Name"  required/>
 
 			<br />
 
@@ -40,7 +40,7 @@
 
 			</div>
 			<button id="cancelBtn" type="button" class="aa-browse-btn btn">Cancel</button>
-			<button type="button" id="editBtn" class="aa-browse-btn btn">Update</button>
+			<button type="button" id="updateBtn" class="aa-browse-btn btn">Update</button>
 		</div>
 		<div class="col-md-4">
 
@@ -98,9 +98,34 @@
 
 	});
 
-	$("#editBtn" ).on("click",function () {
 
-		$.ajax(
+	$('#editCategory').validate({
+		rules: {
+			Name: {
+				required: true,
+				minlength: 5,
+				maxlength: 50,
+			},
+			Description: {
+				maxlength: 500
+			}
+		},
+		messages: {
+			Name: {
+				required: 'Name is required',
+				minlength: 'Minimum Length is 5',
+				maxlength: 'Maximum Length is 50'
+			},
+			Description: {
+				maxlength: 'Maximum Length is 500'
+			}
+		}
+	});
+
+	$("#updateBtn" ).on("click",function () {
+
+		if ($("#editCategory").valid()) {
+			$.ajax(
 			{
 				type: "Post",
 				url: '@Url.Action("Edit", "Category")',
@@ -109,14 +134,31 @@
 				success: function (result) {
 					$("#tblContainer").html(result);
 					$("#actionContainer").html("");
-					
+
 				},
 				error: function (result) {
-					console.log(result);
+					swal({
+						title: "Warning!",
+						text: "Please enter all valid data in fields.",
+						icon: "warning",
+						button: true,
+						dangerMode: true,
+					});
 				}
 
 
+				});
+		}
+		else
+		{
+			swal({
+				title: "Warning!",
+				text: "Please enter all valid data in fields.",
+				icon: "warning",
+				button: true,
+				dangerMode: true,
 			});
+		}
 
 	});
 
