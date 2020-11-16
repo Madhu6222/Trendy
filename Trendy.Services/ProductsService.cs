@@ -41,6 +41,31 @@ namespace Trendy.Services
             }
         }
 
+        public int GetProductsCount(string search)
+        {
+            using (var context = new TrendyDbContext())
+            {
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return context.Products.Where(product => product.Name != null &&
+                             product.Name.ToLower().Contains(search.ToLower())).Count();
+                }
+                else
+                {
+                    return context.Products.Count();
+                }
+            }
+        }
+
+        public List<Product> GetAllProducts()
+        {
+
+            using (var context = new TrendyDbContext())
+            {
+                return context.Products.ToList();
+            }
+        }
+
         public List<Product> GetProductsWithID(List<int> IDs)
         {
             using (var context = new TrendyDbContext())
@@ -49,14 +74,36 @@ namespace Trendy.Services
             }
         }
 
-        public List<Product> GetProducts(int pageNo)
+        public List<Product> GetProducts(string search, int pageNo)
         {
-            int pageSize = 5;
+            int pageSize = int.Parse(ConfigurationsService.Instance.GetConfig("ListingPageSize").Value);
 
             using (var context = new TrendyDbContext())
             {
-                return context.Products.OrderBy(x=>x.Name).Skip((pageNo-1)* pageSize).Take(pageSize).Include(c => c.Category).ToList();
-                //return context.Products.Include(c => c.Category).ToList();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+
+                    return context.Products.Where(product => product.Name != null &&
+                             product.Name.ToLower().Contains(search.ToLower()))
+                            .OrderBy(x => x.ID)
+                            .Skip((pageNo - 1) * pageSize)
+                            .Take(pageSize)
+                            .Include(x => x.Category)
+                            .ToList();
+
+                }
+                else
+                {
+
+                    return context.Products
+                            .OrderBy(x => x.ID)
+                            .Skip((pageNo - 1) * pageSize)
+                            .Take(pageSize)
+                            .Include(x => x.Category)
+                            .ToList();
+                }
+                
             }
         }
 

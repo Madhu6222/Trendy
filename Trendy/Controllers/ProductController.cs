@@ -31,18 +31,24 @@ namespace Trendy.Controllers
 
             ProductSearchViewModel model = new ProductSearchViewModel();
 
-            model.PageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            model.SearchTerm = search;
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
 
-            model.Products = ProductsService.Instance.GetProducts(model.PageNo);
+            var totalRecords = CategoryService.Instance.GetCategoriesCount(search);
+            model.Products = ProductsService.Instance.GetProducts(search, pageNo.Value);
 
-            if (!string.IsNullOrEmpty(search))
+            if (model.Products!=null)
             {
-                model.SearchTerm = search;
-                model.Products = model.Products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                model.Pager = new Pager(totalRecords, pageNo, 3);
+                return PartialView("ProductTable", model);
+            }
+            else
+            {
+                return HttpNotFound();
             }
 
 
-            return PartialView(model);
+            
         }
 
         #region Create

@@ -77,7 +77,7 @@ namespace Trendy.Services
 
         public List<Category> GetCategories(string search,int pageNo)
         {
-            int pageSize = 3; //int.Parse(ConfigurationsService.Instance.GetConfig("ListingPageSize").Value);
+            int pageSize = int.Parse(ConfigurationsService.Instance.GetConfig("ListingPageSize").Value);
 
             using (var context = new TrendyDbContext())
             {

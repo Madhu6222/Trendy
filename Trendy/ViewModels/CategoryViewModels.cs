@@ -34,7 +34,11 @@ namespace Trendy.ViewModels
     {
         public int ID { get; set; }
 
+        [Required]
+        [MinLength(4), MaxLength(50)]
         public string Name { get; set; }
+
+        [MaxLength(500)]
         public string Description { get; set; }
 
         public string ImageURL { get; set; }
