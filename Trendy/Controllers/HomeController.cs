@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Trendy.Services;
+using Trendy.Web.ViewModels;
 
 namespace Trendy.Controllers
 {
@@ -10,7 +12,11 @@ namespace Trendy.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            HomeViewModel model = new HomeViewModel();
+
+            model.FeaturedCategories = CategoriesService.Instance.GetFeaturedCategories();
+
+            return View(model);
         }
 
         public ActionResult About()
