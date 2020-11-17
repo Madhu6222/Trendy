@@ -37,7 +37,7 @@ namespace Trendy.Services
 
                 if (categoryID.HasValue)
                 {
-                    products = products.Where(x=>x.Category.ID == categoryID.Value).ToList();
+                    products = products.Where(x=>x.CategoryID == categoryID.Value).ToList();
                 }
 
                 if(!string.IsNullOrEmpty(searchTerm))
@@ -83,7 +83,7 @@ namespace Trendy.Services
 
                 if (categoryID.HasValue)
                 {
-                    products = products.Where(x => x.Category.ID == categoryID.Value).ToList();
+                    products = products.Where(x => x.CategoryID == categoryID.Value).ToList();
                 }
 
                 if (!string.IsNullOrEmpty(searchTerm))

@@ -48,6 +48,7 @@ a {
 a:active,
 a:hover {
   outline: 0;
+  cursor:pointer;
 }
 abbr[title] {
   border-bottom: none;
@@ -3423,9 +3424,9 @@ fieldset[disabled] .btn-warning.focus {
   background-color: #fff;
 }
 .btn-danger {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
+    color: #fff;
+    background-color: #ff4b4b;
+    border-color: #ff4b4b;
 }
 .btn-danger:focus,
 .btn-danger.focus {
@@ -3435,7 +3436,7 @@ fieldset[disabled] .btn-warning.focus {
 }
 .btn-danger:hover {
   color: #fff;
-  background-color: #c9302c;
+  background-color: #333333;
   border-color: #ac2925;
 }
 .btn-danger:active,
@@ -6831,4 +6832,3 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
