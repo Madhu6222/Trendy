@@ -50,8 +50,15 @@
 						<td>@category.Name</td>
 						<td>@category.Products.Count</td>
 						<td class="wrap-td">
-							<button class="editBtn btn" data-id="@category.ID">Edit</button>
-							<button class="deleteBtn btn" data-id="@category.ID">Delete</button>
+							@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+							{
+								<button class="editBtn btn" data-id="@category.ID">Edit</button>
+							}
+							@if (User.IsInRole("Admin"))
+							{
+
+								<button class="deleteBtn btn" data-id="@category.ID">Delete</button>
+							}
 						</td>
 					</tr>
 				}

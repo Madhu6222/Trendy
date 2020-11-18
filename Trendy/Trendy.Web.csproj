@@ -306,6 +306,7 @@
     <Content Include="Content\images\ef5c5fb0-7ab4-4a8c-a04c-9c650b586f31.jpg" />
     <Content Include="Content\images\ef604fca-1039-44af-ab8c-a70e9235ab00.jpg" />
     <Content Include="Content\images\f1d9abe0-a500-4a77-b8b7-a56c969fc7fc.jpg" />
+    <Content Include="favicon.ico" />
     <Content Include="Content\images\fe0aa6d8-47c5-40c1-a38d-6868d63c7c92.jpg" />
     <Content Include="Content\images\gallery\gallery-1-870x377.jpg" />
     <Content Include="Content\images\gallery\gallery-2-870x377.jpg" />
@@ -548,7 +549,6 @@
     <Content Include="Content\stylesheets\shortcodes.css" />
     <Content Include="Content\stylesheets\style.css" />
     <Content Include="Content\stylesheets\woocommerce.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

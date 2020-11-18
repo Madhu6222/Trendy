@@ -396,6 +396,13 @@ namespace Trendy.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        
+        public ActionResult Logout() 
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]

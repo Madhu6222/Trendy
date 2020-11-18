@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Trendy.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Employee")]
     public class ProductController : Controller
     {
         // GET: Product
@@ -110,6 +111,7 @@ namespace Trendy.Web.Controllers
         #endregion
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Delete(int ID)
         {
             ProductsService.Instance.DeleteProduct(ID);

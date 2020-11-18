@@ -52,7 +52,7 @@
                 <div class="container-fluid clearfix container-width-93" id="site-header-inner">
                     <div id="logo" class="logo float-left">
                         <a href="@Url.Action("Index","Home")" title="logo">
-                            <img src="~/Content/images/Trendy.png" alt="image" width="107" height="24" data-retina="images/logo@2x.png" data-width="107" data-height="24" />
+                            <img src="~/Content/images/Trendy.png" alt="image" width="107" height="24"  />
                         </a>
                     </div><!-- /.logo -->
                     <div class="mobile-button"><span></span></div>
@@ -73,9 +73,23 @@
                                             {
 
                                                 <li>
-                                                    <a class="icon_login" href="#">@User.Identity.Name</a>
+                                                    Hello! -
+                                                    <a class="icon" href="#"> @User.Identity.Name</a>
+                                                </li>
+                                                <li>
+                                                    <a class="icon" href="@Url.Action("Logout","Account")">Logout</a>
                                                 </li>
                                             }
+                                            else
+                                            {
+                                                <li>
+                                                    <a class="icon" href="@Url.Action("Login","Account")">Login</a>
+                                                </li>
+                                                <li>
+                                                    <a class="icon" href="@Url.Action("Register","Account")">Register</a>
+                                                </li>
+                                            }
+
                                         </ul>
                                     </div><!-- /.widget_shopping_cart_content -->
                                 </div>
@@ -107,6 +121,24 @@
                                     <a href="@Url.Action("Index","Home")">HOME</a>
 
                                 </li>
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index","Product")">Product</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Index","Category")">Category</a>
+
+                                        </li>
+
+                                    }
+
+                                }
+
                                 <li class="active">
                                     <a href="@Url.Action("Index","Shop")">SHOP</a>
                                     <ul class="submenu">

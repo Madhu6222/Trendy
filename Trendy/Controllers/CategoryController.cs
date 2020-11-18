@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace Trendy.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class CategoryController : Controller
     {
         [HttpGet]
@@ -109,6 +109,7 @@ namespace Trendy.Web.Controllers
         #endregion
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int ID)
         {
             CategoriesService.Instance.DeleteCategory(ID);

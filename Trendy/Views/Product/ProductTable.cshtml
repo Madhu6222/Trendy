@@ -66,8 +66,13 @@
 						</td>
 						<td>@product.Price</td>
 						<td class="wrap-td">
+
 							<button class="editBtn btn" data-id="@product.ID">Edit</button>
-							<button class="deleteBtn btn" data-id="@product.ID">Delete</button>
+							@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+							{
+
+								<button class="deleteBtn btn" data-id="@product.ID">Delete</button>
+							}
 							<button class="addtoCart btn" data-id="@product.ID">Add To Cart</button>
 						</td>
 					</tr>
