@@ -102,11 +102,12 @@
 		}
 	});
 	function GetData(dUrl){
-		showPreloader();
-		debugger;
+		showLoader();
+		
 		$.ajax({
 			url: dUrl,
 			data: {
+				categoryID: $("#CategoryID").val(),
 				minimumPrice : priceSlider.slider("values", 0),
 				maximumPrice : priceSlider.slider("values", 1)
 			}
@@ -128,6 +129,7 @@
 				searchTerm: $("#SearchTerm").val(),
 				sortBy: $("#SortBy").val(),
 				categoryID: $("#CategoryID").val(),
+				
 				minimumPrice : priceSlider.slider("values", 0),
 				maximumPrice : priceSlider.slider("values", 1)
 			}

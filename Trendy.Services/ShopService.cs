@@ -27,15 +27,15 @@ namespace Trendy.Services
         }
 
         #endregion
-        
-        //public int SaveOrder(Order order)
-        //{
-        //    using (var context = new TrendyDbContext())
-        //    {
-        //        context.Orders.Add(order);
-        //        return context.SaveChanges();
-        //    }
-        //}
+
+        public int SaveOrder(Order order)
+        {
+            using (var context = new TrendyDbContext())
+            {
+                context.Orders.Add(order);
+                return context.SaveChanges();
+            }
+        }
 
     }
 }
