@@ -1,9 +1,6 @@
 ﻿@using Trendy.Web.Code
 @model ShopViewModel
-@{
-	ViewBag.Title = "Index";
-
-}
+@{ ViewBag.Title = "Index"; }
 
 <!-- Page title -->
 <div class="page-title parallax parallax1">
@@ -84,7 +81,6 @@
 </section><!-- /.flat-row -->
 
 <script>
-
 	var callTimeout;
 	var priceSlider = $("#slide-range").slider({
 		range: true,
@@ -94,26 +90,20 @@
 		slide: function (event, ui) {
 			var minPrice = ui.values[0];
 			var maxPrice = ui.values[1];
-
-			$("#amount").val("₹" + minPrice + ".00" + " - " + "₹" + maxPrice + ".00");
-
+			$("#amount").val("$" + minPrice + ".00" + " - " + "$" + maxPrice + ".00");
 			clearTimeout(callTimeout);
-			callTimeout = setTimeout(PriceRangeChange, 600);
+			callTimeout = setTimeout(PriceRangeChange, 500);
 		}
 	});
-
 	$(".dataLink").click(function () {
 		var url = $(this).attr("data-href");
-
 		if (url != "" || url != undefined) {
 			GetData(url);
 		}
 	});
-
 	function GetData(dUrl){
-		
-		showLoader();
-
+		showPreloader();
+		debugger;
 		$.ajax({
 			url: dUrl,
 			data: {
@@ -122,20 +112,15 @@
 			}
 		})
 		.done(function (response) {
-			
 			$("#productsDiv").html(response);
 		})
 		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
-			console.log("fail");
 			alert("FAIL");
 		})
 		.always(function(){
-			console.log("always");
 			hideLoader();
 		});
-		
 	}
-
 	function PriceRangeChange(){
 		$.ajax({
 			url: '@Url.Action("FilterProducts", "Shop")',

@@ -28,7 +28,7 @@ namespace Trendy.Services
         }
 
         #endregion
-        
+
         public List<Product> SearchProducts(string searchTerm, int? minimumPrice, int? maximumPrice, int? categoryID, int? sortBy, int pageNo, int pageSize)
         {
             using (var context = new TrendyDbContext())
@@ -37,10 +37,10 @@ namespace Trendy.Services
 
                 if (categoryID.HasValue)
                 {
-                    products = products.Where(x=>x.CategoryID == categoryID.Value).ToList();
+                    products = products.Where(x => x.CategoryID == categoryID.Value).ToList();
                 }
 
-                if(!string.IsNullOrEmpty(searchTerm))
+                if (!string.IsNullOrEmpty(searchTerm))
                 {
                     products = products.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower())).ToList();
                 }
@@ -55,7 +55,7 @@ namespace Trendy.Services
                     products = products.Where(x => x.Price <= maximumPrice.Value).ToList();
                 }
 
-                if(sortBy.HasValue)
+                if (sortBy.HasValue)
                 {
                     switch (sortBy.Value)
                     {

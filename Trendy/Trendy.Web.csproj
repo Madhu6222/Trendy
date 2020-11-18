@@ -179,6 +179,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011171214045_InitialCreate.cs" />
+    <Compile Include="Migrations\202011171214045_InitialCreate.Designer.cs">
+      <DependentUpon>202011171214045_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011180936314_AddedPropertiesToUser.cs" />
+    <Compile Include="Migrations\202011180936314_AddedPropertiesToUser.Designer.cs">
+      <DependentUpon>202011180936314_AddedPropertiesToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -476,6 +485,8 @@
     <Content Include="Content\images\slider\slider-bg-8.jpg" />
     <Content Include="Content\images\system\placeholder-image.png" />
     <Content Include="Content\images\tester.jpg" />
+    <Content Include="Content\images\Trendy.png" />
+    <Content Include="Content\images\Trendy2.png" />
     <Content Include="Content\images\wordpress-version.png" />
     <Content Include="Content\javascript\bootstrap.min.js" />
     <Content Include="Content\javascript\equalize.min.js" />
@@ -651,6 +662,14 @@
       <Project>{4b4a63d9-67c8-4d0e-acdf-a2c22e12f63c}</Project>
       <Name>Trendy.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011171214045_InitialCreate.resx">
+      <DependentUpon>202011171214045_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011180936314_AddedPropertiesToUser.resx">
+      <DependentUpon>202011180936314_AddedPropertiesToUser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

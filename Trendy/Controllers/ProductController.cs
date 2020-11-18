@@ -34,6 +34,8 @@ namespace Trendy.Web.Controllers
             return PartialView(model);
         }
 
+        #region Create
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -57,6 +59,11 @@ namespace Trendy.Web.Controllers
             ProductsService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");            
         }
+
+        #endregion
+
+
+        #region Update
 
         [HttpGet]
         public ActionResult Edit(int ID)
@@ -98,7 +105,10 @@ namespace Trendy.Web.Controllers
 
             return RedirectToAction("ProductTable");
         }
-        
+
+
+        #endregion
+
         [HttpPost]
         public ActionResult Delete(int ID)
         {

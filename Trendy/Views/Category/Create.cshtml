@@ -65,7 +65,6 @@
 			processData: false
 		})
 		.done(function (response) {
-			console.log(response);
 
 			if(response.Success)
 			{
@@ -102,7 +101,7 @@
 	});
 
 	$("#saveBtn").click(function () {
-		debugger;
+		
 		if ($("#createCategory").valid()) {
 			$.ajax({
 				type: 'POST',
